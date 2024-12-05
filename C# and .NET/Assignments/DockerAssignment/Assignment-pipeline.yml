@@ -1,0 +1,31 @@
+pool:
+  name: kubernetes-agents
+
+workspace:
+  clean: all
+
+trigger:
+- main
+- develop
+
+variables:
+- group: docker.push.gcr.devops
+- group: nuget.push.core
+
+resources:
+  repositories:
+  - repository: scripts
+    type: git
+    name: am.devops.pipeline.buildscripts
+
+steps:
+- template: composite/dotnet.yaml@scripts
+
+- script: docker network rm $(docker network ls -q) || true
+  displayName: 'Cleanup all networks'
+
+- script: dotnet restore
+  displayName: 'Dotnet restore'
+
+- script: dotnet publish -p:PublishDir=obj/docker/publish --runtime linux-x64
+  displayName: 'Dotnet publish'

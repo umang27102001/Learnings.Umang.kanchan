@@ -1,0 +1,6 @@
+@AmLite_HostAddress = http://localhost:5063
+
+GET {{AmLite_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

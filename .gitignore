@@ -1,0 +1,6 @@
+.vs/
+bin/
+obj/
+coveragereport/
+.idea/
+__pycache__/
